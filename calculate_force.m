@@ -1,6 +1,5 @@
 function [ separation, force, abcd_idx, abcd_val] = calculate_force(z, def, kc, z_points, p)
 % calculates the force vectors based on the defelection
-% with the relevant parameters using the Sader maethod
 
 z_points_sorted = sort(z_points) ;
 a_val = z_points_sorted(1) ;
@@ -23,7 +22,6 @@ ab_fit = fit(z(ab_indices),def(ab_indices),'poly1') ; % fit to contact regime
 z_surface =  -(ab_fit.p2-cd_fit.p2)/(ab_fit.p1-cd_fit.p1) ; % surface level
 z_real = z - z_surface ; % z is set to zero at the surface
 
-%separation = z  + def_corc - (z(a)+def_corc(a)) ; 
 separation = z_real + def_lin_tiltcorc ;
 sep_fit = fit(z(ab_indices),separation(ab_indices), 'poly1') ;
 separation = separation - (sep_fit.p1.*z + sep_fit.p2) ;
