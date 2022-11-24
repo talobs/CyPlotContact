@@ -19,3 +19,19 @@ Note that many of the program options are available through right-click on the r
 ## Images
 The image below shows file import and force calculation on the left, and force groups on the right.
 ![](./images/program.png)
+
+## Force Calculation Algorithem
+The image below shows a typical deflection vs stage z-position measurement. The measurement can be ambiguously separated to three regions: 
+1.	No Interaction (Background) Region – In this region the tip and the surface are too distant to exhibit significant interaction, thus what measured is a background signal, caused mainly by optics, which is subtracted from the total signal is the process of the force calculation.
+2.	Interaction Region – At this region the tip and the surface are close enough to produce a significant interaction that is recorded by deflection of the cantilever.
+3.	Contact Region – At this region the tip and the surface are in stiff contact and hence the change is deflection is 1:1 compatible with the change is the z-position. This region is used to calculate the conversion factor of the deflection from volts to meters (usually done during experiment).
+
+Given the above, the algorithm to calculate the force is as followes:
+1.	Fit linear lines to the No-Interaction and Contact regions
+2.	Calculate their intercept point (marked by a red dot). This is the point of contact in the case of zero interaction between the probe and the surface.
+3.	Calibrate z by subtracting the z-position of the intercept point from the raw data of z.
+4.	Calculate the separation by adding the deflection and z, namely d+z.
+5.	Clean the deflection signal from the background signal by subtracting linear extrapolation of the No-Interaction region.
+6.	Calculate the force by factoring the deflection by the spring constant.
+
+![](./images/force_calc.png)
